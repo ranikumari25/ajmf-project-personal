@@ -114,28 +114,40 @@ body {
 }
 
 /* =========================================
-   1. HERO SECTION & COMPACT SPLIT-SCREEN LAYOUT
+   1. HERO SECTION & COMPACT 50/50 SPLIT-SCREEN LAYOUT
    ========================================= */
 .hero-section {
   position: relative;
   background: linear-gradient(135deg, #060e1a 0%, #0c1b33 50%, #152848 100%);
   color: #fff;
-  padding: 35px 0 !important;
-  clip-path: none !important;
-  -webkit-clip-path: none !important;
+  padding: 0 !important;
+  margin: 0;
+  width: 100%;
   overflow: hidden;
 }
 
 .hero-grid {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 36px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  min-height: 540px;
+  align-items: stretch !important;
 }
 
 .hero-text {
-  flex: 1 1 45%;
-  max-width: 560px;
+  flex: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding: 70px 50px 70px clamp(24px, 6vw, 120px) !important;
+  box-sizing: border-box !important;
+  background: transparent;
 }
 
 .tagline {
@@ -144,14 +156,14 @@ body {
   letter-spacing: 2px;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .hero-title {
-  font-size: 42px;
+  font-size: clamp(32px, 3.2vw, 44px);
   font-weight: 800;
   line-height: 1.18;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .hero-title span {
@@ -167,11 +179,11 @@ body {
 }
 
 .hero-desc {
-  font-size: 16px;
+  font-size: 16.5px;
   line-height: 1.6;
   color: #cbd5e1;
   max-width: 540px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .hero-btns {
@@ -180,27 +192,33 @@ body {
   flex-wrap: wrap;
 }
 
-/* RIGHT SIDE: ONE LARGE IMMERSIVE VIDEO AREA */
+/* RIGHT SIDE: ONE LARGE IMMERSIVE VIDEO AREA (NO FLOATING CARD) */
 .hero-video-container {
-  flex: 1 1 55%;
-  position: relative;
-  width: 100%;
-  max-width: 660px;
-  aspect-ratio: 16 / 9;
-  min-height: 330px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex: none !important;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  aspect-ratio: unset !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
   background: #000000;
+  overflow: hidden;
 }
 
 .hero-video-preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
 }
 
 .hero-video-overlay {
@@ -210,7 +228,7 @@ body {
     to bottom,
     rgba(6, 14, 26, 0.05) 0%,
     rgba(6, 14, 26, 0.25) 50%,
-    rgba(6, 14, 26, 0.70) 100%
+    rgba(6, 14, 26, 0.65) 100%
   );
   pointer-events: none;
   z-index: 2;
@@ -218,14 +236,14 @@ body {
 
 .watch-more-btn {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
   background: linear-gradient(135deg, #E06A28 0%, #f8941d 100%);
   color: #ffffff;
   border: none;
-  padding: 12px 28px;
+  padding: 13px 30px;
   border-radius: 30px;
   font-family: 'Poppins', sans-serif;
   font-size: 13.5px;
@@ -236,7 +254,7 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  box-shadow: 0 8px 22px rgba(224, 106, 40, 0.45);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
   white-space: nowrap;
 }
@@ -244,7 +262,7 @@ body {
 .watch-more-btn:hover {
   background: linear-gradient(135deg, #f8941d 0%, #c7591e 100%);
   transform: translateX(-50%) translateY(-3px);
-  box-shadow: 0 12px 28px rgba(224, 106, 40, 0.6);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
 }
 
 .watch-more-btn i {
@@ -1011,19 +1029,19 @@ body {
 /* Responsive Media Queries */
 @media (max-width: 992px) {
   .hero-grid {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 35px !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
   }
 
   .hero-text {
-    max-width: 100%;
+    padding: 50px 30px 50px 36px !important;
   }
 
   .hero-video-container {
-    max-width: 100%;
-    height: 280px;
-    margin: 0 auto;
+    max-width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
   }
 
   .about-grid, 
@@ -1047,6 +1065,33 @@ body {
 }
 
 @media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: auto !important;
+  }
+
+  .hero-text {
+    width: 100% !important;
+    padding: 45px 20px 35px 20px !important;
+  }
+
+  .hero-video-container {
+    width: 100% !important;
+    height: 320px !important;
+    min-height: 280px !important;
+    position: relative !important;
+  }
+
+  .hero-video-preview {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
   .why-grid, 
   .journey-grid, 
   .impact-grid, 
@@ -1065,7 +1110,7 @@ body {
   }
   
   .hero-title {
-    font-size: 36px;
+    font-size: 32px;
   }
 }
 
@@ -1080,7 +1125,7 @@ body {
 }
 
 @media (max-width: 992px) {
-  .hero-grid, .about-grid, .timeline-card, .ahead-grid {
+  .about-grid, .timeline-card, .ahead-grid {
     grid-template-columns: 1fr;
   }
   .hero-logos-card {
@@ -1103,8 +1148,19 @@ body {
 }
 
 @media (max-width: 576px) {
+  .hero-text {
+    padding: 38px 16px 30px 16px !important;
+  }
+  .hero-video-container {
+    height: 250px !important;
+  }
+  .watch-more-btn {
+    padding: 10px 22px;
+    font-size: 12px;
+    bottom: 20px;
+  }
   .hero-title {
-    font-size: 38px;
+    font-size: 30px;
   }
   .section-title {
     font-size: 26px;
@@ -1121,4 +1177,60 @@ body {
 
 .footer-col.contact p a[href*="anishjadhavmemorialfoundation.org"]:hover {
   color: #F8941D !important;
+}
+
+
+/* ==========================================================
+   PARTNERSHIP PAGE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .partners-grid, .partnership-benefits-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .partners-grid, .partnership-benefits-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .partnership-hero, .partnership-section {
+        padding: 40px 16px !important;
+    }
+
+    .partnership-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+    }
+}
+
+
+@media screen and (max-width: 360px) {
+    .partnership-title {
+        font-size: 20px !important;
+    }
+    .partner-card {
+        padding: 14px 10px !important;
+    }
+}
+
+
+/* ==========================================================
+   PARTNERSHIP PAGE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .partner-card, .benefit-card, .partner-row-container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .partner-img, .benefit-icon-wrapper, .partner-right-panel {
+        order: 1 !important;
+        margin-bottom: 14px !important;
+    }
+
+    .partner-content, .benefit-content, .partner-left-panel {
+        order: 2 !important;
+    }
 }

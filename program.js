@@ -7,7 +7,7 @@ const programs = [
         color: "#284a9fff",
         careerIcon: "fa-solid fa-briefcase",
         careerColor: "#3b82f6",
-
+        video: "SOP1.mp4",
         image:
             "Sop.jpeg",
 
@@ -38,6 +38,7 @@ const programs = [
         color: "#284a9fff",
         careerIcon: "fa-solid fa-book-open",
         careerColor: "#a855f7",
+        video: "SOE1.mp4",
         image: "Soe.jpeg",
 
         descKey: "soe_desc",
@@ -66,6 +67,7 @@ const programs = [
         color: "#284a9fff",
         careerIcon: "fa-solid fa-utensils",
         careerColor: "#22c55e",
+        video: "SOSC.mp4",
         image: "Sosc.jpeg",
 
         descKey: "sosc_desc",
@@ -92,7 +94,7 @@ const programs = [
         color: "#284a9fff",
         careerIcon: "fa-solid fa-chart-line",
         careerColor: "#f97316",
-        video: "Schoolofbusiness.mp4",
+        video: "SOB1.mp4",
         image: "Sob.jpeg",
 
         descKey: "sob_desc",
@@ -121,7 +123,7 @@ const programs = [
         color: "#284a9fff",
         careerIcon: "fa-solid fa-building-columns",
         careerColor: "#f59e0b",
-        video: "SOF.mp4",
+        video: "SOF1.mp4",
         image: "Sof.jpeg",
 
         descKey: "sof_desc",

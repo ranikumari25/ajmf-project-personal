@@ -83,7 +83,6 @@
                         <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="events.html" data-i18n="nav_events">Events</a></li>
                         <li><a href="facility.html" data-i18n="nav_facility">Campus & Facilities</a></li>
-                        
                     </ul>
                 </li>
 
@@ -95,7 +94,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="getinvolved.html" data-i18n="nav_getinvolved">Get Involved</a></li>
                         <li><a href="Apply.html" data-i18n="nav_apply">Apply Now</a></li>
-                        
                     </ul>
                 </li>
 
@@ -140,7 +138,8 @@
 
 <main>
 
-    <section class="hero-video-section">
+    <section class="hero-slider-section">
+        <!-- Background HD YouTube Video -->
         <div class="hero-video-bg-wrapper">
             <iframe id="heroYoutubeBg" class="hero-youtube-bg"
                 src="https://www.youtube.com/embed/MuvRV_MyX5I?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=MuvRV_MyX5I&playsinline=1&rel=0&disablekb=1&modestbranding=1&vq=hd1080"
@@ -149,61 +148,75 @@
                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <div class="slide-overlay"></div>
         </div>
-        <div class="container hero-container">
-            <div class="slide-content">
-                <h1 class="slide-title" data-i18n="slide1_title">Empowering Every Child Through Education</h1>
-                <p class="slide-description" data-i18n="slide1_desc">
-                    Anish Jadhav Memorial Foundation is a non-profit
-                    organization working to provide quality education, skills and opportunities to children from
-                    underserved communities.
-                </p>
-                <div class="slide-features">
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-book-open"></i></div>
-                        <div class="feature-text">
-                            <h4 data-i18n="slide1_feat1_title">Education</h4>
-                            <p data-i18n="slide1_feat1_desc">Providing access to quality learning.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
-                        <div class="feature-text">
-                            <h4 data-i18n="slide1_feat2_title">Empowerment</h4>
-                            <p data-i18n="slide1_feat2_desc">Building confidence and life skills.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-                        <div class="feature-text">
-                            <h4 data-i18n="slide1_feat3_title">Community</h4>
-                            <p data-i18n="slide1_feat3_desc">Creating a stronger and inclusive society.</p>
-                        </div>
-                    </div>
+
+        <!-- Hero Sound ON/OFF Toggle Button (Right Side) -->
+        <button type="button" class="hero-sound-btn" id="heroSoundBtn" aria-label="Unmute Sound">
+            <i class="fa-solid fa-volume-xmark" id="heroSoundIcon"></i>
+        </button>
+
+        <div class="hero-slider-track">
+
+            <!-- SLIDE 1 -->
+            <div class="hero-slide active">
+                <div class="slide-bg slide1-bg">
+                    <div class="slide-overlay"></div>
                 </div>
-                <div class="slide-cta">
-                    <a href="getinvolved.html" class="hero-btn btn-solid">
-                        <span data-i18n="nav_getinvolved">Get Involved</span> <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                    <a href="https://admissions.navgurukul.org/students/" class="hero-btn btn-outline"
-                        target="_blank" rel="noopener">
-                        <i class="fa-regular fa-circle-play"></i> <span data-i18n="apply_here">Apply Here</span>
-                    </a>
+                <div class="container hero-container">
+                    <div class="slide-content">
+                        <h1 class="slide-title" data-i18n="slide1_title">Empowering Every Child Through Education</h1>
+                        <p class="slide-description" data-i18n="slide1_desc">
+                            Anish Jadhav Memorial Foundation is a non-profit
+                            organization working to provide quality education, skills and opportunities to children from
+                            underserved communities.
+                        </p>
+                        <div class="slide-features">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="feature-text">
+                                    <h4 data-i18n="slide1_feat1_title">Education</h4>
+                                    <p data-i18n="slide1_feat1_desc">Providing access to quality learning.</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+                                <div class="feature-text">
+                                    <h4 data-i18n="slide1_feat2_title">Empowerment</h4>
+                                    <p data-i18n="slide1_feat2_desc">Building confidence and life skills.</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+                                <div class="feature-text">
+                                    <h4 data-i18n="slide1_feat3_title">Community</h4>
+                                    <p data-i18n="slide1_feat3_desc">Creating a stronger and inclusive society.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide-cta">
+                            <button type="button" class="hero-btn btn-outline watch-full-video-trigger"
+                                id="slide1WatchVideoBtn">
+                                <i class="fa-solid fa-circle-play"></i> <span>Watch More</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
+
     </section>
 
-    <!-- FULL VIDEO PLAYER MODAL FOR SLIDE 2 -->
-    <div id="slide2VideoModal" class="video-modal" aria-hidden="true" role="dialog" aria-label="Hero Video Player">
-        <div class="video-modal-backdrop" id="slide2VideoModalBackdrop"></div>
+    <!-- FULL YOUTUBE VIDEO MODAL -->
+    <div id="heroVideoModal" class="video-modal" aria-hidden="true" role="dialog"
+        aria-label="Hero YouTube Video Player">
+        <div class="video-modal-backdrop" id="closeHeroVideoModalBackdrop"></div>
         <div class="video-modal-container">
-            <button type="button" class="video-modal-close" id="closeSlide2VideoModalBtn"
+            <button type="button" class="video-modal-close" id="closeHeroVideoModalBtn"
                 aria-label="Close video player">&times;</button>
             <div class="video-player-wrapper">
-                <video id="slide2FullVideoPlayer" controls preload="metadata">
-                    <source src="slide2.mp4" type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
+                <iframe id="modalYoutubeIframe" src="" title="AJMF Full Video Player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -260,7 +273,9 @@
     <section class="ajmf-values-outer-wrapper"
         style="background: #fff7ee; padding: 30px 0 50px 0; position: relative; overflow: hidden;" id="partner">
         <!-- BOTANICAL CUTOUT BACKGROUND DECORATION LAYER -->
-        <div style="position: absolute; inset: 0; background-image: url('images-photo/watercolor_frame_bg.png'); background-size: cover; background-position: center; opacity: 0.22; pointer-events: none; z-index: 0;"></div>
+        <div
+            style="position: absolute; inset: 0; background-image: url('images-photo/watercolor_frame_bg.png'); background-size: cover; background-position: center; opacity: 0.22; pointer-events: none; z-index: 0;">
+        </div>
         <div class="our-partner-wrapper" style="position: relative; z-index: 1;">
             <!-- LEFT BOTANICAL BACKGROUND ACCENT -->
 
@@ -279,7 +294,8 @@
                     <h2 class="partner-title" data-i18n="partner_title_stronger">Stronger Together.<br>Greater <span
                             class="highlight-orange">Impact.</span></h2>
                     <p class="partner-desc" data-i18n="partner_banner_desc">
-                        Working together with <span class="navgurukul-name"><span class="nav-text">Nav</span><span class="gurukul-text">Gurukul</span></span> to empower youth through industry-relevant
+                        Working together with <span class="navgurukul-name"><span class="nav-text">Nav</span><span
+                                class="gurukul-text">Gurukul</span></span> to empower youth through industry-relevant
                         education, technology and career-focused learning.
                     </p>
                     <a href="partnership.html" class="btn-partner-learn">
@@ -379,14 +395,15 @@
                     <h2 class="ajmf-section-title"
                         style="font-family: 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: 700; color: #0b2d5c !important; line-height: 1.25; margin: 0 0 16px 0;"
                         data-i18n="about_story_title">
-                        The Story Behind<br>Anish Jadhav Memorial <span
+                        The Story Behind Anish Jadhav Memorial <span
                             style="color: #ea580c !important;">Foundation</span>
                     </h2>
 
                     <p style="font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 1.7; color: #64748b !important; margin-bottom: 16px;"
                         data-i18n="about_p1">
-                         Anish Jadhav Memorial Foundation is a non-profit organization working to provide quality education, skills and opportunities to children from
-                            underserved communities.
+                        Anish Jadhav Memorial Foundation is a non-profit organization working to provide quality
+                        education, skills and opportunities to children from
+                        underserved communities.
                     </p>
 
                     <div style="margin-top: 24px;">
@@ -909,143 +926,163 @@
             });
         }
 
-        // Hero Slider Functionality
+        // Hero Single Slide & Sound Initialization
         const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('#sliderDots .dot');
-        const prevBtn = document.getElementById('prevSlide');
-        const nextBtn = document.getElementById('nextSlide');
-        const sliderContainer = document.querySelector('.hero-slider-container');
-
         if (slides.length > 0) {
-            let currentSlide = 0;
-            let slideInterval = null;
-            const autoSlideDuration = 5500;
-
-            function showSlide(index) {
-                if (index < 0) {
-                    currentSlide = slides.length - 1;
-                } else if (index >= slides.length) {
-                    currentSlide = 0;
-                } else {
-                    currentSlide = index;
-                }
-
-                slides.forEach((slide, i) => {
-                    if (i === currentSlide) {
-                        slide.classList.add('active');
-                        const vid = slide.querySelector('video');
-                        if (vid) {
-                            vid.currentTime = 0;
-                            vid.play().catch(() => { });
-                        }
-                    } else {
-                        slide.classList.remove('active');
-                        const vid = slide.querySelector('video');
-                        if (vid) {
-                            vid.pause();
-                        }
-                    }
-                });
-
-                dots.forEach((dot, i) => {
-                    if (i === currentSlide) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
-
-            function startAutoSlide() {
-                stopAutoSlide();
-                slideInterval = setInterval(() => {
-                    showSlide(currentSlide + 1);
-                }, autoSlideDuration);
-            }
-
-            function stopAutoSlide() {
-                if (slideInterval) {
-                    clearInterval(slideInterval);
-                    slideInterval = null;
-                }
-            }
-
-            // Slide 2 Full Video Modal Handlers
-            const watchSlide2Btn = document.getElementById('watchSlide2VideoBtn');
-            const slide2Modal = document.getElementById('slide2VideoModal');
-            const slide2ModalBackdrop = document.getElementById('slide2VideoModalBackdrop');
-            const closeSlide2ModalBtn = document.getElementById('closeSlide2VideoModalBtn');
-            const slide2FullPlayer = document.getElementById('slide2FullVideoPlayer');
-
-            function openSlide2VideoModal() {
-                if (!slide2Modal || !slide2FullPlayer) return;
-                slide2Modal.classList.add('is-active');
-                slide2Modal.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-                slide2FullPlayer.currentTime = 0;
-                slide2FullPlayer.muted = false;
-                slide2FullPlayer.volume = 1.0;
-                slide2FullPlayer.play().catch(() => { });
-            }
-
-            function closeSlide2VideoModal() {
-                if (!slide2Modal || !slide2FullPlayer) return;
-                slide2Modal.classList.remove('is-active');
-                slide2Modal.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-                slide2FullPlayer.pause();
-                slide2FullPlayer.currentTime = 0;
-            }
-
-            if (watchSlide2Btn) {
-                watchSlide2Btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    openSlide2VideoModal();
-                });
-            }
-
-            if (closeSlide2ModalBtn) {
-                closeSlide2ModalBtn.addEventListener('click', closeSlide2VideoModal);
-            }
-
-            if (slide2ModalBackdrop) {
-                slide2ModalBackdrop.addEventListener('click', closeSlide2VideoModal);
-            }
-
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && slide2Modal && slide2Modal.classList.contains('is-active')) {
-                    closeSlide2VideoModal();
-                }
-            });
-
-            if (prevBtn) {
-                prevBtn.addEventListener('click', () => {
-                    showSlide(currentSlide - 1);
-                    startAutoSlide();
-                });
-            }
-
-            if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    showSlide(currentSlide + 1);
-                    startAutoSlide();
-                });
-            }
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index);
-                    startAutoSlide();
-                });
-            });
-
-            if (sliderContainer) {
-                sliderContainer.addEventListener('mouseenter', stopAutoSlide);
-                sliderContainer.addEventListener('mouseleave', startAutoSlide);
-            }
-
-            startAutoSlide();
+            slides[0].classList.add('active');
         }
+
+        // Hero Sound ON/OFF Toggle Button Handler for Existing Hero Video
+        const heroSoundBtn = document.getElementById('heroSoundBtn');
+        const heroSoundIcon = document.getElementById('heroSoundIcon');
+        let isHeroMuted = true;
+
+        function unmuteHeroVideo() {
+            const heroIframe = document.getElementById('heroYoutubeBg');
+            if (heroIframe && heroIframe.contentWindow) {
+                try {
+                    heroIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+                    heroIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[100]}', '*');
+                } catch (e) {}
+            }
+            if (window.heroYoutubePlayer && typeof window.heroYoutubePlayer.unMute === 'function') {
+                try {
+                    window.heroYoutubePlayer.unMute();
+                    if (typeof window.heroYoutubePlayer.setVolume === 'function') {
+                        window.heroYoutubePlayer.setVolume(100);
+                    }
+                } catch (e) {}
+            }
+            if (heroSoundIcon) {
+                heroSoundIcon.className = 'fa-solid fa-volume-high';
+            }
+            if (heroSoundBtn) {
+                heroSoundBtn.setAttribute('aria-label', 'Mute Sound');
+            }
+            isHeroMuted = false;
+        }
+
+        function muteHeroVideo() {
+            const heroIframe = document.getElementById('heroYoutubeBg');
+            if (heroIframe && heroIframe.contentWindow) {
+                try {
+                    heroIframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+                } catch (e) {}
+            }
+            if (window.heroYoutubePlayer && typeof window.heroYoutubePlayer.mute === 'function') {
+                try {
+                    window.heroYoutubePlayer.mute();
+                } catch (e) {}
+            }
+            if (heroSoundIcon) {
+                heroSoundIcon.className = 'fa-solid fa-volume-xmark';
+            }
+            if (heroSoundBtn) {
+                heroSoundBtn.setAttribute('aria-label', 'Unmute Sound');
+            }
+            isHeroMuted = true;
+        }
+
+        if (heroSoundBtn) {
+            heroSoundBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (isHeroMuted) {
+                    unmuteHeroVideo();
+                } else {
+                    muteHeroVideo();
+                }
+            });
+        }
+
+        // Slide 1 YouTube Video Modal Handlers
+        const watchSlide1Btn = document.getElementById('slide1WatchVideoBtn');
+        const heroVideoModal = document.getElementById('heroVideoModal');
+        const closeHeroVideoModalBackdrop = document.getElementById('closeHeroVideoModalBackdrop');
+        const closeHeroVideoModalBtn = document.getElementById('closeHeroVideoModalBtn');
+        const modalYoutubeIframe = document.getElementById('modalYoutubeIframe');
+        const slide1YoutubeEmbedUrl = "https://www.youtube.com/embed/MuvRV_MyX5I?enablejsapi=1&autoplay=1&mute=0&controls=1&rel=0";
+
+        function pauseHeroBackgroundVideo() {
+            const heroIframe = document.getElementById('heroYoutubeBg');
+            if (heroIframe && heroIframe.contentWindow) {
+                try {
+                    heroIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                    heroIframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+                } catch (e) {}
+            }
+            if (window.heroYoutubePlayer && typeof window.heroYoutubePlayer.pauseVideo === 'function') {
+                try {
+                    window.heroYoutubePlayer.pauseVideo();
+                    window.heroYoutubePlayer.mute();
+                } catch (e) {}
+            }
+        }
+
+        function resumeHeroBackgroundVideo() {
+            const heroIframe = document.getElementById('heroYoutubeBg');
+            if (heroIframe && heroIframe.contentWindow) {
+                try {
+                    heroIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                    if (!isHeroMuted) {
+                        heroIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+                    } else {
+                        heroIframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+                    }
+                } catch (e) {}
+            }
+            if (window.heroYoutubePlayer && typeof window.heroYoutubePlayer.playVideo === 'function') {
+                try {
+                    window.heroYoutubePlayer.playVideo();
+                    if (!isHeroMuted && typeof window.heroYoutubePlayer.unMute === 'function') {
+                        window.heroYoutubePlayer.unMute();
+                    } else if (isHeroMuted && typeof window.heroYoutubePlayer.mute === 'function') {
+                        window.heroYoutubePlayer.mute();
+                    }
+                } catch (e) {}
+            }
+        }
+
+        function openHeroVideoModal() {
+            if (!heroVideoModal || !modalYoutubeIframe) return;
+            pauseHeroBackgroundVideo();
+            modalYoutubeIframe.src = slide1YoutubeEmbedUrl;
+            heroVideoModal.classList.add('is-active');
+            heroVideoModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHeroVideoModal() {
+            if (!heroVideoModal || !modalYoutubeIframe) return;
+            modalYoutubeIframe.src = '';
+            heroVideoModal.classList.remove('is-active');
+            heroVideoModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            resumeHeroBackgroundVideo();
+        }
+
+        if (watchSlide1Btn) {
+            watchSlide1Btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                openHeroVideoModal();
+            });
+        }
+
+        if (closeHeroVideoModalBtn) {
+            closeHeroVideoModalBtn.addEventListener('click', closeHeroVideoModal);
+        }
+
+        if (closeHeroVideoModalBackdrop) {
+            closeHeroVideoModalBackdrop.addEventListener('click', closeHeroVideoModal);
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                if (heroVideoModal && heroVideoModal.classList.contains('is-active')) {
+                    closeHeroVideoModal();
+                }
+            }
+        });
 
         // ==========================================================
         // WHAT WE DO SECTION (7 LEARNING APPROACHES SLIDER & MODAL)

@@ -1,6 +1,7 @@
 // ==========================================================
 // CONTACT US PAGE JAVASCRIPT
-// Handles FAQ accordion toggle & contact form feedback
+// Handles FAQ accordion toggle & contact form email submission
+// Target recipient: surajsahani@navgurukul.org
 // ==========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,19 +36,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ---------------- 2. CONTACT FORM SUBMISSION ----------------
+    // ---------------- 2. REAL EMAIL FORM SUBMISSION ----------------
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const fullName = document.getElementById('fullName')?.value.trim();
-            const email = document.getElementById('email')?.value.trim();
-            const message = document.getElementById('message')?.value.trim();
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+            const fullName = fullNameInput?.value.trim() || '';
+            const email = emailInput?.value.trim() || '';
+            const phone = phoneInput?.value.trim() || 'N/A';
+            const subject = subjectInput?.value.trim() || 'General Inquiry';
+            const message = messageInput?.value.trim() || '';
             const currentLang = localStorage.getItem('language') || 'en';
 
+            // Validation
             if (!fullName || !email || !message) {
                 if (formStatus) {
                     formStatus.style.color = '#ef4444';
@@ -58,14 +69,70 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (formStatus) {
-                formStatus.style.color = '#16a34a';
-                formStatus.textContent = (currentLang === 'hi')
-                    ? 'संपर्क करने के लिए धन्यवाद! आपका संदेश सफलतापूर्वक भेज दिया गया है। हम जल्द ही आपसे संपर्क करेंगे।'
-                    : 'Thank you for reaching out! Your message has been sent successfully. We will get back to you shortly.';
+            // Disable button and give loading feedback
+            const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
+                submitBtn.innerHTML = (currentLang === 'hi')
+                    ? '<i class="fa-solid fa-spinner fa-spin"></i> भेजा जा रहा है...'
+                    : '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
             }
 
-            contactForm.reset();
+            if (formStatus) {
+                formStatus.style.color = '#0284c7';
+                formStatus.textContent = (currentLang === 'hi')
+                    ? 'आपका संदेश भेजा जा रहा है...'
+                    : 'Sending your message...';
+            }
+
+            try {
+                const response = await fetch('https://formsubmit.co/ajax/surajsahani@navgurukul.org', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: fullName,
+                        email: email,
+                        phone: phone,
+                        subject: subject,
+                        message: message,
+                        _subject: `New Contact Message from ${fullName} - AJMF Website`,
+                        _template: 'table',
+                        _captcha: 'false'
+                    })
+                });
+
+                const result = await response.json().catch(() => ({}));
+
+                if (response.ok || result.success === "true" || result.success === true) {
+                    if (formStatus) {
+                        formStatus.style.color = '#16a34a';
+                        formStatus.textContent = (currentLang === 'hi')
+                            ? 'धन्यवाद! आपका संदेश सफलतापूर्वक भेज दिया गया है। हम जल्द ही आपसे संपर्क करेंगे।'
+                            : 'Your message has been sent successfully.';
+                    }
+                    contactForm.reset();
+                } else {
+                    throw new Error(result.message || 'Submission error');
+                }
+            } catch (err) {
+                console.error('Contact Form Submission Error:', err);
+                if (formStatus) {
+                    formStatus.style.color = '#ef4444';
+                    formStatus.textContent = (currentLang === 'hi')
+                        ? 'आपका संदेश भेजने में असमर्थ। कृपया बाद में पुनः प्रयास करें।'
+                        : 'Unable to send your message. Please try again later.';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = originalBtnHTML;
+                }
+            }
         });
     }
 

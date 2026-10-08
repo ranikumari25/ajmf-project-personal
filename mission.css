@@ -134,47 +134,29 @@ ul {
     align-items: center;
 }
 
-/* ================= HERO SECTION ================= */
+/* ================= HERO SECTION (40% / 60% SPLIT) ================= */
 .hero {
     position: relative;
     width: 100%;
-    min-height: 580px;
-    background-image: url('image.png');
-    background-size: cover;
-    background-position: center right;
-    background-repeat: no-repeat;
-    padding: 95px 0 100px 0;
+    min-height: 520px;
+    background: #eef5ff;
+    padding: 0;
     margin: 0;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     overflow: hidden;
 }
 
-/* Full overlay blending left text background into right students image */
+/* Remove blurred / dark overlay over hero */
 .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            #eef5ff 0%,
-            #eef5ff 38%,
-            rgba(238, 245, 255, 0.88) 54%,
-            rgba(238, 245, 255, 0.35) 72%,
-            rgba(238, 245, 255, 0) 100%);
-    z-index: 1;
-    pointer-events: none;
+    display: none !important;
 }
 
 .hero-botanical-topleft {
     position: absolute;
     top: 0;
     left: 0;
-    width: 260px;
+    width: 240px;
     height: auto;
     opacity: 0.22 !important;
     pointer-events: none;
@@ -182,20 +164,28 @@ ul {
 }
 
 .hero-container {
-    width: 90%;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 45px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 0;
     position: relative;
     z-index: 3;
 }
 
 .hero-content {
-    max-width: 520px;
-    width: 100%;
-    padding: 10px 0 !important;
+    flex: 0 0 40%;
+    max-width: 40%;
+    width: 40%;
+    padding: 70px 50px 70px 80px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #eef5ff;
+    z-index: 4;
 }
 
 .hero-tagline-wrapper {
@@ -225,7 +215,7 @@ ul {
 
 .hero-content h1 {
     font-family: 'Playfair Display', serif !important;
-    font-size: 48px !important;
+    font-size: 46px !important;
     color: #0b1f44 !important;
     font-weight: 700 !important;
     line-height: 1.18 !important;
@@ -247,7 +237,7 @@ ul {
     font-weight: 400 !important;
     line-height: 1.65 !important;
     margin-bottom: 32px !important;
-    max-width: 520px !important;
+    max-width: 500px !important;
     text-shadow: none !important;
 }
 
@@ -276,20 +266,44 @@ ul {
     box-shadow: 0 8px 25px rgba(234, 88, 12, 0.4) !important;
 }
 
+.hero-image-container,
 .hero-image-wrapper {
-    flex: 0 0 50%;
-    max-width: 50%;
-    border-radius: 16px;
+    flex: 0 0 60%;
+    max-width: 60%;
+    width: 60%;
+    height: 100%;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     overflow: hidden;
-    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
+.hero-image-container::before {
+    display: none !important;
+}
+
+.hero-img,
 .hero-main-img {
     width: 100%;
     height: 100%;
-    max-height: 440px;
+    max-width: 100%;
     object-fit: cover;
+    object-position: center center;
     display: block;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
 }
 
 /* ================= SECTION TITLE GENERAL ================= */
@@ -1763,11 +1777,46 @@ New
     }
 }
 
-/* ================= MOBILE PHONES ONLY (max-width: 767px) ================= */
+/* ================= RESPONSIVE TABLET & MOBILE HERO ================= */
+@media screen and (max-width: 1200px) {
+    .hero-content {
+        padding: 50px 30px 50px 50px !important;
+    }
+
+    .hero-content h1 {
+        font-size: 38px !important;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .hero {
+        min-height: 450px;
+    }
+
+    .hero-content {
+        flex: 0 0 45%;
+        max-width: 45%;
+        width: 45%;
+        padding: 40px 24px 40px 30px !important;
+    }
+
+    .hero-image-container,
+    .hero-image-wrapper {
+        flex: 0 0 55%;
+        max-width: 55%;
+        width: 55%;
+        min-height: 450px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px !important;
+    }
+}
+
 @media screen and (max-width: 767px) {
     .hero {
-        background: #0B1F44;
-        padding: 0 0 40px 0;
+        background: #eef5ff;
+        padding: 0;
         min-height: auto;
         display: block;
     }
@@ -1782,47 +1831,63 @@ New
         align-items: stretch;
     }
 
-    .hero-image {
-        display: block !important;
-        width: 100%;
-        order: 1;
-        margin-bottom: 24px;
-        overflow: hidden;
-    }
-
-    .hero-image img {
-        width: 100%;
-        height: auto;
-        max-height: 320px;
-        object-fit: cover;
-        display: block;
-    }
-
     .hero-content {
-        order: 2;
-        width: 100%;
+        order: 1 !important;
+        flex: 0 0 100%;
         max-width: 100%;
-        padding: 0 20px;
+        width: 100%;
+        padding: 40px 20px 30px 20px !important;
         margin-bottom: 0;
         text-align: left;
     }
 
+    .hero-image-container,
+    .hero-image-wrapper,
+    .hero-image {
+        order: 2 !important;
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+        display: block !important;
+        margin-bottom: 0;
+    }
+
+    .hero-img,
+    .hero-image img,
+    .hero-main-img {
+        order: initial !important;
+        width: 100%;
+        height: auto;
+        max-height: 380px;
+        object-fit: cover;
+        display: block;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
+    }
+
     .hero-subtitle {
-        font-size: 13px;
-        letter-spacing: 1.2px;
-        margin-bottom: 12px;
+        font-size: 13px !important;
+        letter-spacing: 1.2px !important;
+        margin-bottom: 12px !important;
     }
 
     .hero-content h1 {
-        font-size: 28px;
-        line-height: 1.25;
-        margin-bottom: 16px;
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+        margin-bottom: 16px !important;
     }
 
     .hero-content p {
-        font-size: 15.5px;
-        line-height: 1.6;
-        margin-bottom: 24px;
+        font-size: 15.5px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 24px !important;
     }
 
     .hero-buttons {
@@ -1834,7 +1899,7 @@ New
     .btn-primary {
         width: 100%;
         justify-content: center;
-        padding: 14px 24px;
+        padding: 14px 24px !important;
     }
 }
 
@@ -1933,4 +1998,50 @@ section.our-partner-section[id="partner"] > *,
 .student-led-campus-page .ready-section > * {
     position: relative !important;
     z-index: 1 !important;
+}
+
+/* ==========================================================
+   MISSION PAGE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .mission-grid, .vision-grid, .values-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mission-hero, .mission-section {
+        padding: 40px 16px !important;
+    }
+
+    .mission-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+    }
+
+    .mission-card {
+        padding: 24px 16px !important;
+    }
+}
+
+
+/* ==========================================================
+   MISSION PAGE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .mission-card, .vision-card {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .mission-card-img, .vision-img, img {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    .mission-card-content, .vision-content {
+        order: 2 !important;
+        width: 100% !important;
+    }
 }

@@ -422,8 +422,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================
-   FORCE HIGH RESOLUTION (1080P HD) YOUTUBE HERO BACKGROUND VIDEO
+   YOUTUBE HERO BACKGROUND & SOUND CONTROLS & FULL VIDEO MODAL
    ========================================================== */
+let heroYoutubePlayer = null;
+
 (function loadYouTubeHeroAPI() {
     const iframe = document.getElementById('heroYoutubeBg');
     if (!iframe) return;
@@ -440,10 +442,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevReady = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = function () {
         if (typeof prevReady === 'function') prevReady();
-        new YT.Player('heroYoutubeBg', {
+        heroYoutubePlayer = new YT.Player('heroYoutubeBg', {
             events: {
                 'onReady': function (event) {
-                    event.target.mute();
+                    try {
+                        event.target.unMute();
+                        if (typeof event.target.setVolume === 'function') {
+                            event.target.setVolume(100);
+                        }
+                    } catch (e) {}
                     if (typeof event.target.setPlaybackQuality === 'function') {
                         event.target.setPlaybackQuality('hd1080');
                     }
@@ -460,3 +467,303 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ---------------- HERO SLIDER CAROUSEL ROTATION ----------------
+    function initHeroSlider() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('#sliderDots .dot');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        const heroSection = document.querySelector('.hero-slider-section');
+
+        if (slides.length === 0) return;
+        if (slides.length === 1) {
+            slides[0].classList.add('active');
+            return;
+        }
+
+        let currentIndex = 0;
+        let autoSlideTimer = null;
+
+        function goToSlide(index) {
+            if (index < 0) {
+                index = slides.length - 1;
+            } else if (index >= slides.length) {
+                index = 0;
+            }
+
+            slides.forEach((slide, i) => {
+                const video = slide.querySelector('video');
+                if (i === index) {
+                    slide.classList.add('active');
+                    if (video) {
+                        video.currentTime = 0;
+                        video.play().catch(() => {});
+                    }
+                } else {
+                    slide.classList.remove('active');
+                    if (video) {
+                        video.pause();
+                    }
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            currentIndex = index;
+
+            // Re-apply language translations if currently in Hindi
+            const currentLang = localStorage.getItem('language') || 'en';
+            if (typeof applyTranslations === 'function' && currentLang === 'hi') {
+                applyTranslations('hi');
+            }
+        }
+
+        function nextSlide() {
+            goToSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentIndex - 1);
+        }
+
+        function startAutoSlide() {
+            stopAutoSlide();
+            autoSlideTimer = setInterval(() => {
+                nextSlide();
+            }, 5000);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = null;
+            }
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                nextSlide();
+                startAutoSlide();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                prevSlide();
+                startAutoSlide();
+            });
+        }
+
+        dots.forEach((dot) => {
+            dot.addEventListener('click', (e) => {
+                e.preventDefault();
+                const idx = parseInt(dot.getAttribute('data-index'));
+                if (!isNaN(idx)) {
+                    goToSlide(idx);
+                    startAutoSlide();
+                }
+            });
+        });
+
+        if (heroSection) {
+            heroSection.addEventListener('mouseenter', stopAutoSlide);
+            heroSection.addEventListener('mouseleave', startAutoSlide);
+
+            // Touch swipe support for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            heroSection.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            heroSection.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                if (touchStartX - touchEndX > 40) {
+                    nextSlide();
+                    startAutoSlide();
+                } else if (touchEndX - touchStartX > 40) {
+                    prevSlide();
+                    startAutoSlide();
+                }
+            }, { passive: true });
+        }
+
+        // Initialize slider state & start auto-rotation
+        goToSlide(0);
+        startAutoSlide();
+    }
+
+    initHeroSlider();
+
+    // ---------------- MUTE / UNMUTE HERO VIDEO TOGGLE ----------------
+    const heroSoundToggle = document.getElementById('heroSoundToggle');
+    const heroSoundIcon = document.getElementById('heroSoundIcon');
+    const heroSoundText = document.getElementById('heroSoundText');
+
+    if (heroSoundToggle) {
+        heroSoundToggle.addEventListener('click', () => {
+            if (!heroYoutubePlayer || typeof heroYoutubePlayer.isMuted !== 'function') return;
+
+            if (heroYoutubePlayer.isMuted()) {
+                heroYoutubePlayer.unMute();
+                if (typeof heroYoutubePlayer.setVolume === 'function') {
+                    heroYoutubePlayer.setVolume(100);
+                }
+                if (heroSoundIcon) heroSoundIcon.className = 'fa-solid fa-volume-high';
+                if (heroSoundText) heroSoundText.textContent = 'Mute';
+            } else {
+                heroYoutubePlayer.mute();
+                if (heroSoundIcon) heroSoundIcon.className = 'fa-solid fa-volume-xmark';
+                if (heroSoundText) heroSoundText.textContent = 'Unmute';
+            }
+        });
+    }
+
+    // ---------------- WATCH FULL VIDEO MODALS (SLIDE 1 & SLIDE 2) ----------------
+    const heroVideoModal = document.getElementById('heroVideoModal');
+    const modalYoutubeIframe = document.getElementById('modalYoutubeIframe');
+    const closeHeroVideoModalBtn = document.getElementById('closeHeroVideoModalBtn');
+    const closeHeroVideoModalBackdrop = document.getElementById('closeHeroVideoModalBackdrop');
+
+    const slide1WatchBtn = document.getElementById('slide1WatchVideoBtn');
+    const heroWatchFullVideoBtn = document.getElementById('heroWatchFullVideoBtn');
+
+    const watchSlide2Btn = document.getElementById('watchSlide2VideoBtn');
+    const slide2Modal = document.getElementById('slide2VideoModal');
+    const slide2ModalBackdrop = document.getElementById('slide2VideoModalBackdrop');
+    const closeSlide2ModalBtn = document.getElementById('closeSlide2VideoModalBtn');
+    const slide2FullPlayer = document.getElementById('slide2FullVideoPlayer');
+
+    // --- SLIDE 1 FULL VIDEO MODAL (YOUTUBE) ---
+    function openHeroVideoModal() {
+        if (!heroVideoModal || !modalYoutubeIframe) return;
+
+        const heroIframe = document.getElementById('heroYoutubeBg');
+        if (heroIframe && heroIframe.contentWindow) {
+            try {
+                heroIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                heroIframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+            } catch (e) {}
+        }
+        if (heroYoutubePlayer && typeof heroYoutubePlayer.pauseVideo === 'function') {
+            try { heroYoutubePlayer.pauseVideo(); heroYoutubePlayer.mute(); } catch (e) {}
+        }
+
+        modalYoutubeIframe.src = "https://www.youtube.com/embed/MuvRV_MyX5I?autoplay=1&mute=0&rel=0&enablejsapi=1&controls=1&vq=hd1080";
+        heroVideoModal.classList.add('is-active');
+        heroVideoModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeHeroVideoModal() {
+        if (!heroVideoModal || !modalYoutubeIframe) return;
+
+        modalYoutubeIframe.src = "";
+        heroVideoModal.classList.remove('is-active');
+        heroVideoModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+
+        const heroIframe = document.getElementById('heroYoutubeBg');
+        if (heroIframe && heroIframe.contentWindow) {
+            try {
+                heroIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            } catch (e) {}
+        }
+        if (heroYoutubePlayer && typeof heroYoutubePlayer.playVideo === 'function') {
+            try { heroYoutubePlayer.playVideo(); } catch (e) {}
+        }
+    }
+
+    // --- SLIDE 2 FULL VIDEO MODAL (MP4) ---
+    function openSlide2VideoModal() {
+        if (!slide2Modal || !slide2FullPlayer) return;
+
+        if (heroYoutubePlayer && typeof heroYoutubePlayer.pauseVideo === 'function') {
+            try { heroYoutubePlayer.pauseVideo(); } catch (e) {}
+        }
+
+        slide2Modal.classList.add('is-active');
+        slide2Modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        slide2FullPlayer.currentTime = 0;
+        slide2FullPlayer.muted = false; // Audio Enabled
+        slide2FullPlayer.volume = 1.0;  // Full Volume
+        slide2FullPlayer.play().catch(() => {});
+    }
+
+    function closeSlide2VideoModal() {
+        if (!slide2Modal || !slide2FullPlayer) return;
+
+        slide2Modal.classList.remove('is-active');
+        slide2Modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        slide2FullPlayer.pause();
+        slide2FullPlayer.currentTime = 0;
+
+        if (heroYoutubePlayer && typeof heroYoutubePlayer.playVideo === 'function') {
+            try { heroYoutubePlayer.playVideo(); } catch (e) {}
+        }
+    }
+
+    // Attach explicit event handlers
+    if (slide1WatchBtn) {
+        slide1WatchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openHeroVideoModal();
+        });
+    }
+
+    if (heroWatchFullVideoBtn) {
+        heroWatchFullVideoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openHeroVideoModal();
+        });
+    }
+
+    if (watchSlide2Btn) {
+        watchSlide2Btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openSlide2VideoModal();
+        });
+    }
+
+    if (closeHeroVideoModalBtn) {
+        closeHeroVideoModalBtn.addEventListener('click', closeHeroVideoModal);
+    }
+    if (closeHeroVideoModalBackdrop) {
+        closeHeroVideoModalBackdrop.addEventListener('click', closeHeroVideoModal);
+    }
+
+    if (closeSlide2ModalBtn) {
+        closeSlide2ModalBtn.addEventListener('click', closeSlide2VideoModal);
+    }
+    if (slide2ModalBackdrop) {
+        slide2ModalBackdrop.addEventListener('click', closeSlide2VideoModal);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (heroVideoModal && heroVideoModal.classList.contains('is-active')) {
+                closeHeroVideoModal();
+            }
+            if (slide2Modal && slide2Modal.classList.contains('is-active')) {
+                closeSlide2VideoModal();
+            }
+        }
+    });
+});

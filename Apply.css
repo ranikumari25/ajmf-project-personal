@@ -687,3 +687,59 @@
         padding-left: 28px;
     }
 }
+
+/* ==========================================================
+   APPLY PAGE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .apply-steps-grid, .eligibility-grid, .apply-form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .apply-hero-section, .apply-form-section {
+        padding: 40px 16px !important;
+    }
+
+    .apply-title, .section-heading {
+        font-size: clamp(24px, 6vw, 34px) !important;
+        line-height: 1.25 !important;
+    }
+
+    .apply-card, .form-container {
+        padding: 24px 16px !important;
+    }
+
+    .form-row {
+        flex-direction: column !important;
+        gap: 14px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .apply-btn {
+        width: 100% !important;
+    }
+}
+
+
+/* ==========================================================
+   APPLY PAGE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .step-card, .eligibility-card, .apply-hero-container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .step-icon-wrapper, .step-img, .eligibility-img {
+        order: 1 !important;
+        margin-bottom: 14px !important;
+    }
+
+    .step-content, .eligibility-content {
+        order: 2 !important;
+    }
+}

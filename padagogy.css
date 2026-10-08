@@ -1184,3 +1184,55 @@ ul {
         text-align: left !important;
     }
 }
+
+
+/* ==========================================================
+   PEDAGOGY PAGE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .pillars-grid, .pedagogy-methods-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pillars-grid, .pedagogy-methods-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .pedagogy-hero, .pedagogy-section {
+        padding: 40px 16px !important;
+    }
+
+    .pedagogy-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+    }
+
+    .pillar-card {
+        padding: 20px 16px !important;
+    }
+}
+
+
+/* ==========================================================
+   PEDAGOGY PAGE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .pillar-card, .method-row {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .pillar-img, .method-img, img {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    .pillar-content, .method-text {
+        order: 2 !important;
+        width: 100% !important;
+    }
+}

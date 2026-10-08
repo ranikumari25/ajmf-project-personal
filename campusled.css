@@ -66,7 +66,7 @@ body {
     left: -20px;
     width: 250px;
     height: auto;
-    opacity: 0.75;
+    opacity: 0.12 !important;
     pointer-events: none;
     z-index: 1;
 }
@@ -77,7 +77,7 @@ body {
     right: -15px;
     width: 220px;
     height: auto;
-    opacity: 0.75;
+    opacity: 0.12 !important;
     pointer-events: none;
     z-index: 1;
 }
@@ -271,7 +271,7 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.85;
+    opacity: 0.15 !important;
     z-index: 1;
     pointer-events: none;
 }
@@ -364,7 +364,7 @@ body {
     left: -20px;
     width: 240px;
     height: auto;
-    opacity: 0.45 !important;
+    opacity: 0.10 !important;
     pointer-events: none;
     z-index: 1;
     transform: rotate(90deg);
@@ -376,7 +376,7 @@ body {
     left: -20px;
     width: 250px;
     height: auto;
-    opacity: 0.45 !important;
+    opacity: 0.10 !important;
     pointer-events: none;
     z-index: 1;
 }
@@ -387,7 +387,7 @@ body {
     right: -20px;
     width: 240px;
     height: auto;
-    opacity: 0.45 !important;
+    opacity: 0.10 !important;
     pointer-events: none;
     z-index: 1;
 }
@@ -397,7 +397,7 @@ body {
     position: absolute;
     font-family: 'Caveat', cursive !important;
     color: #ea580c !important;
-    opacity: 0.70 !important;
+    opacity: 0.18 !important;
     font-weight: 700 !important;
     font-size: 32px !important;
     line-height: 1.05 !important;
@@ -557,7 +557,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.45 !important;
+    opacity: 0.10 !important;
     z-index: -1;
     pointer-events: none;
 }
@@ -1185,7 +1185,7 @@ section.our-partner-section[id="partner"]::before,
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    opacity: 0.22 !important;
+    opacity: 0.08 !important;
     pointer-events: none !important;
     z-index: 0 !important;
 }
@@ -1225,7 +1225,7 @@ section.our-partner-section[id="partner"] > *,
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    opacity: 0.22 !important;
+    opacity: 0.08 !important;
     pointer-events: none !important;
     z-index: 0 !important;
 }
@@ -1237,4 +1237,66 @@ section.our-partner-section[id="partner"] > *,
 .student-led-campus-page .ready-section > * {
     position: relative !important;
     z-index: 1 !important;
+}
+
+/* ==========================================================
+   CAMPUS LED MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .council-grid, .campusled-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .campusled-hero, .council-section {
+        padding: 40px 16px !important;
+    }
+
+    .council-grid, .campusled-stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .hero-title, .council-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+        line-height: 1.25 !important;
+    }
+
+    .council-modal-container {
+        width: 95% !important;
+        padding: 24px 16px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .council-card {
+        padding: 20px 16px !important;
+    }
+}
+
+
+/* ==========================================================
+   CAMPUS LED MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .council-card, .campusled-hero-container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .council-img-box, .council-card img {
+        order: 1 !important;
+        width: 100% !important;
+        max-height: 220px !important;
+        object-fit: contain !important;
+        margin-bottom: 14px !important;
+        border-radius: 12px !important;
+    }
+
+    .council-card-content, .council-info {
+        order: 2 !important;
+        width: 100% !important;
+    }
 }
