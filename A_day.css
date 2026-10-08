@@ -462,3 +462,66 @@ ul {
         height: 170px;
     }
 }
+
+/* ==========================================================
+   A DAY IN LIFE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .aday-timeline-item, .schedule-grid, .day-hero-container {
+        grid-template-columns: 1fr !important;
+        flex-direction: column !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .day-hero-section, .aday-section {
+        padding: 40px 16px !important;
+    }
+
+    .day-hero-title, .aday-heading {
+        font-size: clamp(24px, 6vw, 34px) !important;
+        line-height: 1.25 !important;
+    }
+
+    .aday-card, .schedule-card {
+        padding: 20px 16px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .aday-hero-subtitle {
+        font-size: 14px !important;
+    }
+}
+
+
+@media screen and (max-width: 360px) {
+    .day-hero-title, .aday-heading {
+        font-size: 20px !important;
+    }
+    .aday-card, .schedule-card {
+        padding: 14px 10px !important;
+    }
+}
+
+
+/* ==========================================================
+   A DAY IN LIFE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .aday-card, .schedule-card, .aday-timeline-item {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .aday-card-img, .timeline-img, .schedule-img, img {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    .aday-card-body, .timeline-content, .schedule-info {
+        order: 2 !important;
+        width: 100% !important;
+    }
+}

@@ -64,6 +64,7 @@
     flex-shrink: 0;
 }
 
+.footer-logo-content h2,
 .footer-logo-content h3 {
     font-family: 'Poppins', sans-serif;
     font-size: 22px;
@@ -73,6 +74,7 @@
     margin: 0 0 4px 0;
 }
 
+.footer-logo-content p,
 .footer-logo-content h5 {
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
@@ -328,28 +330,100 @@
         grid-template-columns: 1fr !important;
         gap: 28px !important;
         padding: 35px 16px 20px !important;
+        box-sizing: border-box !important;
     }
 
     .footer-col {
         width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .footer-col.foundation {
         margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .logo-box {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 14px !important;
+        text-align: left !important;
+        margin-bottom: 16px !important;
+        width: 100% !important;
+    }
+
+    .logo-box img {
+        order: 1 !important;
+        width: 65px !important;
+        height: 65px !important;
+        flex-shrink: 0 !important;
+        border-radius: 50% !important;
+        margin: 0 !important;
+        object-fit: contain !important;
+    }
+
+    .footer-logo-content {
+        order: 2 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        text-align: left !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+    }
+
+    .footer-logo-content h2,
+    .footer-logo-content h3 {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        line-height: 1.25 !important;
+        margin: 0 0 3px 0 !important;
+        text-align: left !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .footer-logo-content p,
+    .footer-logo-content h5 {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        letter-spacing: 1px !important;
+        color: #d9d9d9 !important;
+        text-transform: uppercase !important;
+        line-height: 1.4 !important;
+        margin: 0 !important;
+        text-align: left !important;
+    }
+
+    .foundation-text {
+        max-width: 100% !important;
+        margin-bottom: 16px !important;
+        text-align: left !important;
+        color: #d8d8d8 !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+    }
+
+    .social-icons {
+        display: flex !important;
+        justify-content: flex-start !important;
+        gap: 12px !important;
+        margin-top: 16px !important;
     }
 
     .footer-col:not(:last-child)::after {
         display: none !important;
     }
 
-    .foundation-text {
-        max-width: 100% !important;
-        margin-bottom: 16px !important;
-    }
-
     .contact p {
         word-break: break-word !important;
         overflow-wrap: break-word !important;
+        text-align: left !important;
     }
 
     .footer-col ul li a {
@@ -370,6 +444,7 @@
         gap: 10px !important;
         text-align: center !important;
         padding: 16px !important;
+        box-sizing: border-box !important;
     }
 }
 
@@ -808,3 +883,55 @@ iframe {
         box-sizing: border-box;
     }
 }
+
+/* ==========================================================
+   DECORATIVE BOTANICAL & DESIGN ASSETS PRESERVATION SHIELD
+   Ensures botanical leaves, cutouts, brush strokes and accents
+   remain visible and scaled on mobile & tablet viewports
+   ========================================================== */
+.gallery-leaf-asset-right,
+.stats-leaf-asset-left,
+.vision-botanical-left,
+.partner-script-accent,
+.values-script-right,
+.botanical-accent,
+.watercolor-bg-layer,
+.stats-watercolor-bg-layer {
+    display: block !important;
+    pointer-events: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .values-botanical-left,
+    .values-script-right-img,
+    .partner-cutout-bg-left,
+    .partner-cutout-bg-right,
+    .stats-cutout-bg-left,
+    .stats-cutout-bg-right {
+        display: none !important;
+    }
+
+    .vision-botanical-left,
+    .stats-leaf-asset-left {
+        max-height: 180px !important;
+        height: 180px !important;
+        left: -15px !important;
+        opacity: 0.12 !important;
+    }
+
+    .gallery-leaf-asset-right {
+        max-height: 180px !important;
+        height: 180px !important;
+        right: -15px !important;
+        opacity: 0.12 !important;
+    }
+
+    .values-script-right,
+    .partner-script-accent {
+        font-size: 16px !important;
+        opacity: 0.75 !important;
+    }
+}
+
+
+

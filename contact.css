@@ -533,3 +533,55 @@ body.contact-page-body {
         height: 320px;
     }
 }
+
+
+/* ==========================================================
+   CONTACT PAGE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .contact-grid, .faq-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .contact-hero, .contact-section {
+        padding: 40px 16px !important;
+    }
+
+    .contact-title, .section-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+        line-height: 1.25 !important;
+    }
+
+    .contact-card, .contact-form {
+        padding: 24px 16px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .contact-btn {
+        width: 100% !important;
+    }
+}
+
+
+/* ==========================================================
+   CONTACT PAGE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .contact-grid, .contact-card-item {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .contact-map-wrapper, .contact-media, .contact-icon-box {
+        order: 1 !important;
+        margin-bottom: 14px !important;
+    }
+
+    .contact-info-wrapper, .contact-form-wrapper, .contact-text {
+        order: 2 !important;
+    }
+}

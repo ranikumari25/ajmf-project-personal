@@ -1,11 +1,11 @@
 /* ==========================================================
    AJMF CENTRALIZED LANGUAGE SWITCHING SYSTEM
    Handles language detection, localStorage persistence,
-   and dynamic DOM translation across all 17 website pages.
+   and dynamic DOM translation across all website pages.
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
-    // 0. Ensure Language Switcher UI component exists in header
+    // 0. Ensure Language Switcher UI component exists in header & is wired up
     ensureLanguageSelectorExists();
 
     // 1. Determine current language preference (defaulting to English 'en')
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 2. Initial application of translations
     applyTranslations(savedLanguage);
     
-    // 3. Attach event listener to language toggle button(s) if available
+    // 3. Attach global event listeners to language switcher controls
     setupLanguageSelectorListeners();
 
     // 4. Setup observer for dynamic elements (Read More expansions, Modals, Accordions)
@@ -22,82 +22,105 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /**
- * Ensures the language dropdown UI component is mounted in the header if missing
+ * Ensures the language dropdown UI component is mounted in the header if missing,
+ * and attaches necessary toggle and selection handlers regardless of whether
+ * it was statically rendered in HTML or dynamically injected.
  */
 function ensureLanguageSelectorExists() {
     const container = document.querySelector('.header .container');
-    if (!container || container.querySelector('.lang-dropdown-wrapper')) return;
+    if (!container) return;
 
-    let actionsDiv = container.querySelector('.header-actions');
-    const hamburgerBtn = container.querySelector('.hamburger-menu, #hamburgerBtn');
-    const desktopBtn = container.querySelector('.donate-btn.desktop-only-btn');
+    let wrapper = container.querySelector('.lang-dropdown-wrapper');
 
-    if (!actionsDiv) {
-        actionsDiv = document.createElement('div');
-        actionsDiv.className = 'header-actions';
-        if (hamburgerBtn) {
-            hamburgerBtn.parentNode.insertBefore(actionsDiv, hamburgerBtn);
-        } else if (desktopBtn) {
-            desktopBtn.parentNode.insertBefore(actionsDiv, desktopBtn);
+    if (!wrapper) {
+        let actionsDiv = container.querySelector('.header-actions');
+        const hamburgerBtn = container.querySelector('.hamburger-menu, #hamburgerBtn');
+        const desktopBtn = container.querySelector('.donate-btn.desktop-only-btn');
+
+        if (!actionsDiv) {
+            actionsDiv = document.createElement('div');
+            actionsDiv.className = 'header-actions';
+            if (hamburgerBtn) {
+                hamburgerBtn.parentNode.insertBefore(actionsDiv, hamburgerBtn);
+            } else if (desktopBtn) {
+                desktopBtn.parentNode.insertBefore(actionsDiv, desktopBtn);
+            } else {
+                container.appendChild(actionsDiv);
+            }
+            if (desktopBtn) {
+                actionsDiv.appendChild(desktopBtn);
+            }
+        }
+
+        wrapper = document.createElement('div');
+        wrapper.className = 'lang-dropdown-wrapper';
+        wrapper.id = 'langDropdownWrapper';
+        wrapper.innerHTML = `
+            <button type="button" class="lang-dropdown-btn" id="langDropdownBtn" aria-expanded="false" aria-label="Select Language">
+                <i class="fa-solid fa-globe lang-globe-icon"></i>
+                <span id="currentLangText">English</span>
+                <i class="fa-solid fa-chevron-down lang-chevron"></i>
+            </button>
+            <ul class="lang-dropdown-menu" id="langDropdownMenu" role="menu">
+                <li><button type="button" class="lang-option" data-lang="en">English</button></li>
+                <li><button type="button" class="lang-option" data-lang="hi">Hindi (हिंदी)</button></li>
+            </ul>
+        `;
+        if (desktopBtn && desktopBtn.parentNode === actionsDiv) {
+            actionsDiv.insertBefore(wrapper, desktopBtn);
         } else {
-            container.appendChild(actionsDiv);
-        }
-        if (desktopBtn) {
-            actionsDiv.appendChild(desktopBtn);
-        }
-    }
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'lang-dropdown-wrapper';
-    wrapper.id = 'langDropdownWrapper';
-    wrapper.innerHTML = `
-        <button type="button" class="lang-dropdown-btn" id="langDropdownBtn" aria-expanded="false" aria-label="Select Language">
-            <i class="fa-solid fa-globe lang-globe-icon"></i>
-            <span id="currentLangText">English</span>
-            <i class="fa-solid fa-chevron-down lang-chevron"></i>
-        </button>
-        <ul class="lang-dropdown-menu" id="langDropdownMenu">
-            <li><button type="button" class="lang-option" data-lang="en">English</button></li>
-            <li><button type="button" class="lang-option" data-lang="hi">हिंदी</button></li>
-        </ul>
-    `;
-    if (desktopBtn && desktopBtn.parentNode === actionsDiv) {
-        actionsDiv.insertBefore(wrapper, desktopBtn);
-    } else {
-        actionsDiv.appendChild(wrapper);
-        if (desktopBtn) {
-            actionsDiv.appendChild(desktopBtn);
+            actionsDiv.appendChild(wrapper);
+            if (desktopBtn) {
+                actionsDiv.appendChild(desktopBtn);
+            }
         }
     }
 
-    // Dropdown toggle event
-    const btn = wrapper.querySelector('#langDropdownBtn');
-    if (btn) {
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            const isOpen = wrapper.classList.toggle('is-open');
-            btn.setAttribute('aria-expanded', isOpen);
-        });
-    }
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (e) {
-        if (!wrapper.contains(e.target)) {
-            wrapper.classList.remove('is-open');
-            if (btn) btn.setAttribute('aria-expanded', 'false');
+    // Attach event listeners to all lang-dropdown-wrappers on the page
+    const wrappers = document.querySelectorAll('.lang-dropdown-wrapper');
+    wrappers.forEach(w => {
+        const btn = w.querySelector('#langDropdownBtn, .lang-dropdown-btn');
+        if (btn && !btn.dataset.langBound) {
+            btn.dataset.langBound = 'true';
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isOpen = w.classList.toggle('is-open');
+                btn.setAttribute('aria-expanded', isOpen);
+            });
         }
-    });
 
-    // Option click event
-    wrapper.querySelectorAll('.lang-option').forEach(function (opt) {
-        opt.addEventListener('click', function (e) {
-            e.preventDefault();
-            const selectedLang = opt.getAttribute('data-lang');
-            changeLanguage(selectedLang);
-            wrapper.classList.remove('is-open');
-            if (btn) btn.setAttribute('aria-expanded', 'false');
+        w.querySelectorAll('[data-lang]').forEach(function (opt) {
+            if (!opt.classList.contains('lang-option')) {
+                opt.classList.add('lang-option');
+            }
+            if (!opt.dataset.langBound) {
+                opt.dataset.langBound = 'true';
+                opt.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const selectedLang = opt.getAttribute('data-lang');
+                    changeLanguage(selectedLang);
+                    w.classList.remove('is-open');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                });
+            }
         });
     });
+
+    // Close all open dropdowns when clicking outside
+    if (!document.datasetCloseLangBound) {
+        document.datasetCloseLangBound = 'true';
+        document.addEventListener('click', function (e) {
+            document.querySelectorAll('.lang-dropdown-wrapper').forEach(w => {
+                if (!w.contains(e.target)) {
+                    w.classList.remove('is-open');
+                    const b = w.querySelector('#langDropdownBtn, .lang-dropdown-btn');
+                    if (b) b.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    }
 }
 
 /**
@@ -115,7 +138,7 @@ function changeLanguage(lang) {
 }
 
 /**
- * Applies translations to all elements with data-i18n, data-i18n-placeholder, and data-i18n-alt
+ * Applies translations to all elements with data-i18n, data-i18n-placeholder, data-i18n-alt, and data-i18n-title
  * @param {string} lang - Active language ('en' or 'hi')
  */
 function applyTranslations(lang) {
@@ -138,7 +161,7 @@ function applyTranslations(lang) {
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(function (el) {
         const key = el.getAttribute('data-i18n');
-        if (dict[key] !== undefined) {
+        if (dict[key] !== undefined && dict[key] !== null) {
             updateElementTextPreservingIcons(el, dict[key]);
         }
     });
@@ -147,7 +170,7 @@ function applyTranslations(lang) {
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
     placeholders.forEach(function (el) {
         const key = el.getAttribute('data-i18n-placeholder');
-        if (dict[key] !== undefined) {
+        if (dict[key] !== undefined && dict[key] !== null) {
             el.placeholder = dict[key];
         }
     });
@@ -156,7 +179,7 @@ function applyTranslations(lang) {
     const altElements = document.querySelectorAll('[data-i18n-alt]');
     altElements.forEach(function (el) {
         const key = el.getAttribute('data-i18n-alt');
-        if (dict[key] !== undefined) {
+        if (dict[key] !== undefined && dict[key] !== null) {
             el.alt = dict[key];
         }
     });
@@ -165,7 +188,7 @@ function applyTranslations(lang) {
     const titleElements = document.querySelectorAll('[data-i18n-title]');
     titleElements.forEach(function (el) {
         const key = el.getAttribute('data-i18n-title');
-        if (dict[key] !== undefined) {
+        if (dict[key] !== undefined && dict[key] !== null) {
             el.title = dict[key];
         }
     });
@@ -210,12 +233,12 @@ function updateElementTextPreservingIcons(el, newText) {
  * Updates the visual state of language toggle buttons / selects across the page
  */
 function updateSwitcherUI(lang) {
-    const currentLangText = document.getElementById('currentLangText');
-    if (currentLangText) {
-        currentLangText.textContent = (lang === 'hi') ? 'हिंदी' : 'English';
-    }
+    const currentLangTexts = document.querySelectorAll('#currentLangText, .current-lang-text');
+    currentLangTexts.forEach(el => {
+        el.textContent = (lang === 'hi') ? 'Hindi (हिंदी)' : 'English';
+    });
 
-    document.querySelectorAll('.lang-option').forEach(function (btn) {
+    document.querySelectorAll('[data-lang]').forEach(function (btn) {
         const btnLang = btn.getAttribute('data-lang');
         if (btnLang === lang) {
             btn.classList.add('is-active');
@@ -226,22 +249,31 @@ function updateSwitcherUI(lang) {
 }
 
 /**
- * Attaches event listeners to language switcher controls
+ * Attaches global event listeners to language switcher controls (delegated)
  */
 function setupLanguageSelectorListeners() {
     document.addEventListener('click', function (e) {
+        const langOpt = e.target.closest('[data-lang]');
+        if (langOpt && !langOpt.dataset.langBound) {
+            const lang = langOpt.getAttribute('data-lang');
+            if (lang) {
+                changeLanguage(lang);
+                const wrapper = langOpt.closest('.lang-dropdown-wrapper');
+                if (wrapper) {
+                    wrapper.classList.remove('is-open');
+                    const btn = wrapper.querySelector('#langDropdownBtn, .lang-dropdown-btn');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                }
+            }
+            return;
+        }
+
         const toggleBtn = e.target.closest('.lang-toggle-btn');
         if (toggleBtn) {
             const currentLang = localStorage.getItem('language') || 'en';
             const nextLang = (currentLang === 'en') ? 'hi' : 'en';
             changeLanguage(nextLang);
             return;
-        }
-
-        const pillBtn = e.target.closest('.lang-pill');
-        if (pillBtn) {
-            const lang = pillBtn.getAttribute('data-lang');
-            if (lang) changeLanguage(lang);
         }
     });
 

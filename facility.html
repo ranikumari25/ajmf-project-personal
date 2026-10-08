@@ -9,10 +9,6 @@
     <link rel="shortcut icon" type="image/jpeg" href="logo.jpeg">
     <title>Campus & Facilities - Anish Jadhav Memorial Foundation</title>
 
-    <link rel="stylesheet" href="facility.css">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="footer.css">
-
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -20,7 +16,11 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="About.css">
+    <link rel="stylesheet" href="facility.css">
 </head>
 
 <body>
@@ -91,7 +91,6 @@
                             <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                             <li><a href="events.html" data-i18n="nav_events">Events</a></li>
                             <li><a href="facility.html" data-i18n="nav_facility">Campus & Facilities</a></li>
-                            
                         </ul>
                     </li>
 
@@ -103,7 +102,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="getinvolved.html" data-i18n="nav_getinvolved">Get Involved</a></li>
                             <li><a href="Apply.html" data-i18n="nav_apply">Apply Now</a></li>
-                            
                         </ul>
                     </li>
 
@@ -146,16 +144,18 @@
                             <span data-i18n="explore_facilities_btn">Explore Our Facilities</span> <i
                                 class="fa-solid fa-arrow-right"></i>
                         </a>
-                        <div class="hero-script-annotation">
-                            <span>Better Resources<br>Brighter Future</span>
-                        </div>
                     </div>
                 </div>
-                <div class="hero-right-media">
+                <div class="hero-center-media">
                     <div class="hero-image-frame">
-                        <img src="facility_campus.png" alt="AJMF Campus Building">
+                        <img src="building.jpeg" alt="AJMF Campus Building">
                     </div>
                     <img src="12_left_botanical_decor.png" alt="Leaves" class="hero-leaf-backdrop">
+                </div>
+                <div class="hero-right-annotation">
+                    <div class="hero-script-annotation">
+                        <span>Better Resources<br>Brighter Future</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -331,10 +331,6 @@
                     <div class="callout-icon-sketch">
                         <i class="fa-solid fa-graduation-cap"></i>
                     </div>
-                    <button id="calloutViewAllBtn" class="btn-primary-orange" type="button">
-                        <span data-i18n="view_all_facilities">View All Facilities</span> <i
-                            class="fa-solid fa-arrow-right"></i>
-                    </button>
                 </div>
             </div>
 
@@ -696,7 +692,6 @@
             const wrapper = document.getElementById('newFacilitiesWrapper');
             const btnText = document.getElementById('viewMoreBtnText');
             const btnIcon = document.getElementById('viewMoreBtnIcon');
-            const calloutBtn = document.getElementById('calloutViewAllBtn');
 
             function toggleFacilities() {
                 if (wrapper) {
@@ -715,16 +710,6 @@
 
             if (toggleBtn) {
                 toggleBtn.addEventListener('click', toggleFacilities);
-            }
-
-            if (calloutBtn) {
-                calloutBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (wrapper && !wrapper.classList.contains('expanded')) {
-                        toggleFacilities();
-                    }
-                    wrapper.scrollIntoView({ behavior: 'smooth' });
-                });
             }
         });
     </script>

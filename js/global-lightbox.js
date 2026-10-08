@@ -118,8 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // 3. Attach Click Handlers to all content photos across the page
     const images = document.querySelectorAll("img");
     images.forEach(img => {
-        // Skip hidden watermarks, background decorative leaves, or small icons
-        if (img.getAttribute("aria-hidden") === "true" || img.classList.contains("apply-botanical-topleft") || img.classList.contains("gallery-botanical-topleft") || img.classList.contains("partner-logo-img") || img.classList.contains("navgurukul-img")) {
+        // Skip hidden watermarks, background decorative leaves, small icons, or gallery grid items handled by dedicated gallery script
+        if (img.getAttribute("aria-hidden") === "true" || img.classList.contains("apply-botanical-topleft") || img.classList.contains("gallery-botanical-topleft") || img.classList.contains("partner-logo-img") || img.classList.contains("navgurukul-img") || img.closest("#lightbox, .gallery-lightbox, .gallery-masonry-grid, .gallery-life-grid, .featured-card")) {
             return;
         }
 

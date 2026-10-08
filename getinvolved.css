@@ -785,3 +785,50 @@ body.get-involved-body {
         justify-content: center;
     }
 }
+
+/* ==========================================================
+   GET INVOLVED MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .ways-grid, .volunteer-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ways-grid, .volunteer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .getinvolved-hero, .getinvolved-section {
+        padding: 40px 16px !important;
+    }
+
+    .getinvolved-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+    }
+}
+
+
+/* ==========================================================
+   GET INVOLVED MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .way-card, .volunteer-card, .partner-card {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .way-card-img, img {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    .way-card-body, .card-text {
+        order: 2 !important;
+        width: 100% !important;
+    }
+}

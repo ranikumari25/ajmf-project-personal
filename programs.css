@@ -808,6 +808,14 @@ body.our-programs-page {
         gap: 24px !important;
     }
 
+    .stats > div:last-child,
+    .our-programs-page .stats > div:last-child {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        width: 100% !important;
+    }
+
     .our-programs-page .stat-card,
     .stat-card {
         display: flex !important;
@@ -1239,12 +1247,17 @@ body.our-programs-page {
     .opportunity-title {
         font-size: 36px;
     }
+
+    .program-hero-botanical-right,
+    .program-hero-botanical-topleft {
+        display: none !important;
+    }
 }
 
 @media screen and (max-width: 576px) {
-    .program-hero-botanical-right {
-        width: 180px;
-        left: -20px;
+    .program-hero-botanical-right,
+    .program-hero-botanical-topleft {
+        display: none !important;
     }
 }
 
@@ -1718,5 +1731,51 @@ section.stats > * {
         width: 100% !important;
         height: 1px !important;
         margin: 4px 0 !important;
+    }
+}
+
+/* ==========================================================
+   PROGRAMS PAGE MOBILE RESPONSIVENESS (<991px, <768px, <480px)
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    .programs-grid, .curriculum-grid, .outcomes-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .programs-hero, .programs-section {
+        padding: 40px 16px !important;
+    }
+
+    .programs-title {
+        font-size: clamp(24px, 6vw, 34px) !important;
+    }
+
+    .program-card {
+        padding: 24px 16px !important;
+    }
+}
+
+
+/* ==========================================================
+   PROGRAMS PAGE MOBILE MEDIA FIRST -> TEXT SECOND (<768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+    .program-card, .curriculum-card, .program-row {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .program-media, .program-video, .program-img, video, img {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    .program-content, .program-text {
+        order: 2 !important;
+        width: 100% !important;
     }
 }
